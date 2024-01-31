@@ -1,0 +1,35 @@
+from init import db, app
+from models import Products, User
+import hashlib
+
+
+def add_items(x: Products):
+    db.session.add(x)
+    db.session.commit()
+
+
+def add_user(name, email, password, avatar_path):
+    password = str(hashlib.sha256(password.encode('utf-8')).hexdigest())
+    user = User(name=name, email=email, password=password, avatar_path=avatar_path)
+    db.session.add(user)
+    db.session.commit()
+
+
+def get_product(cate_id=None, keyword=None):
+    products = Products.query
+    if cate_id:
+        products = products.filter(Products.category.__eq__(cate_id))
+    if keyword:
+        products = products.filter(Products.name.contains(keyword))
+    return products
+
+
+def check_login(email, password):
+    if email and password:
+        password = str(hashlib.sha256(password.encode('utf-8')).hexdigest())
+        user = User.query.filter(User.email.__eq__(email.strip()), User.password.__eq__(password)).first()
+        return user
+
+
+def get_user_by_id(user_id):
+    return User.query.get(user_id)

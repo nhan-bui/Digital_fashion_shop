@@ -1,0 +1,52 @@
+{% extends "layout/base.html" %}
+{% block title %}
+Đăng kí tài khoản
+{% endblock %}
+
+{% block header %}
+    {% include "layout/header.html" %}
+{% endblock %}
+
+{% block content %}
+<h1>Đăng kí tài khoản</h1>
+
+{% if err == 0 %}
+<div class="alert alert-success">
+    <strong>Đăng kí thành công!</strong>
+</div>
+{% elif err == 1 %}
+<div class="alert alert-danger">
+    <strong> Mật khẩu không khớp </strong>
+</div>
+{% elif err == 2 %}
+<div class="alert alert-danger">
+    <strong> Đã có lỗi </strong>
+</div>
+{% endif %}
+
+<form method="post" action="{{url_for('register')}}" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" class="form-control" placeholder="Enter name" id="name" name="name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email address:</label>
+        <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="password" name="password" required>
+    </div>
+    <div class="form-group">
+        <label for="confirmpassword">Confirm Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" id="confirmpassword" name="confirmpassword" required>
+    </div>
+
+    <div class="form-group">
+        <label for="avatar">Avatar:</label>
+        <input type="file" class="form-control" id="avatar" name="avatar"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
+

@@ -1,0 +1,30 @@
+{% extends "layout/base.html" %}
+{% block title %}
+  Trang chủ
+{% endblock %}
+
+{% block header %}
+  {% include "layout/header.html" %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Sản phẩm</h1>
+  <div class="row">
+    {% for p in products %}
+      <div class="col-md-3 col-xs-12" style="padding:5px">
+
+          <div class="card" style="width:100px">
+            <img class="card-img-top" src="{{url_for('static', filename=p.image)}}" alt="{{p.name}}"  style="width: 200px; height: 200px; border-radius: 10px;">
+            <div class="card-body">
+              <h4 class="card-title">{{p.name}}</h4>
+              <p class="card-text">{{ (p.price) }} VND</p>
+              <a href="#" class="btn btn-primary">Đặt hàng</a>
+            </div>
+          </div>
+
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
