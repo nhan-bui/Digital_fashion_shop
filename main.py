@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from models import *
 import utils
 import cloudinary.uploader
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from init import login_manager
 
 
@@ -72,9 +72,28 @@ def log_out():
     return redirect(url_for('home'))
 
 
-@app.route("/user")
+@app.route("/user", methods=['post', "get"])
 def user_page():
-    return render_template("user.html")
+    err = None
+    if request.method.__eq__("POST"):
+        name = request.form.get("name")
+        avatar = request.files.get('avatar')
+        avatar_path = current_user.avatar_path
+        if avatar:
+            res = cloudinary.uploader.upload(avatar)
+            avatar_path = res['secure_url']
+
+        try:
+            current_user.name = name
+            current_user.avatar_path = avatar_path
+            db.session.commit()
+            err = 0
+            return render_template("user.html", err=err)
+        except Exception:
+            err = 1
+
+    return render_template("user.html", err=err)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

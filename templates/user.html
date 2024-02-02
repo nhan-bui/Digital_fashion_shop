@@ -16,22 +16,33 @@
         <img src="{{current_user.avatar_path}}" width="200" style="border-radius: 90px">
         <br>
         <br>
-        <div class="form-group">
-            <label for="avatar">Chọn ảnh đại diện</label>
-            <input type="file" class="form-control" id="avatar" name="avatar"/>
-        </div>
+
         <form method="post" action="{{url_for('user_page')}}" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="avatar">Avatar:</label>
+                <input type="file" class="form-control" id="avatar" name="avatar"/>
+            </div>
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" placeholder="Enter name" id="name" name="name" value="{{current_user.name}}">
             </div>
             <div class="form-group">
                 <label for="email">Email address:</label>
-                <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" value="{{current_user.email}}">
+                <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" value="{{current_user.email}}" readonly>
             </div>
 
             <button type="submit" class="btn btn-primary">Lưu</button>
         </form>
+        <br>
+        {% if err == 0 %}
+        <div class="alert alert-success">
+            <strong>Thay đổi thành công</strong>
+        </div>
+        {% elif err == 1 %}
+        <div class="alert alert-danger">
+            <strong>Đã có lỗi xảy ra</strong>
+        </div>
+        {% endif %}
 
     </div>
     <div class="col-sm-8">
