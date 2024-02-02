@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for
 from models import *
 import utils
 import cloudinary.uploader
@@ -8,15 +8,19 @@ from init import login_manager
 
 @app.route("/", methods=['get', 'post'])
 def home():
-    products = Products.query
+    # products = Products.query
     cate_id = request.args.get('category')
     keyword = request.args.get('keyword')
     products = utils.get_product(cate_id=cate_id, keyword=keyword)
 
     if request.method.__eq__("POST"):
+        if not current_user.is_authenticated:
+            return redirect(url_for("login"))
         pr_id = request.form.get("product_id")
-        quantity = request.form.get("quantity")
-        print(pr_id, quantity)
+        user_id = current_user.id
+        quantity = int(request.form.get("quantity"))
+        utils.add_to_cart(product_id=pr_id, user_id=user_id, quantity=quantity)
+
     # if cate_id is not None:
     #     products = utils.get_product(cate_id=cate_id)
 
@@ -61,7 +65,7 @@ def register():
         try:
             utils.add_user(name=name, email=email, password=password, avatar_path=avatar_path)
             err = 0
-        except Exception:
+        except Exception as e:
             err = 2
     return render_template("register.html", err=err)
 
@@ -98,6 +102,13 @@ def user_page():
             err = 1
 
     return render_template("user.html", err=err)
+
+
+@app.route("/cart")
+def cart():
+    item_cart = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill == False)
+
+    return render_template("cart.html", item_cart=item_cart)
 
 
 if __name__ == "__main__":

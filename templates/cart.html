@@ -1,0 +1,41 @@
+{% extends "layout/base.html" %}
+{% block title %}
+Cart
+{% endblock %}
+
+{% block header %}
+  {% include "layout/header.html" %}
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<h2>Thông tin giỏ hàng</h2>
+{% for item in item_cart %}
+<div class="card">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{url_for('static', filename=item.product.image)}}" alt="{{item.product.name}}" class="card-img" style="width: 200px; height: 210px; border-radius: 10px;">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h3 class="card-title">{{item.product.name}}</h3>
+        <form action="{{url_for('cart')}}" method="post">
+            <input type="hidden" id="product_id" name="product_id" value="{{ item.product.id }}">
+            <label for="quantity">Số lượng:</label>
+            <input type="number" name="quantity" id="quantity" value="{{item.quantity}}" class="form-control form-control-sm rounded" style="width:80px">
+            <br>
+            <p>Giá sp: {{item.product.price}} VNĐ</p>
+            <h4>Tổng tền: {{item.product.price * item.quantity}} VNĐ</h4>
+            <button type="submit" class="btn btn-primary">Mua hàng</button>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+{% endfor %}
+
+{% endblock %}

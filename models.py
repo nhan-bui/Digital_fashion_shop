@@ -4,6 +4,9 @@ from flask_login import UserMixin
 from init import db, app
 from datetime import datetime
 from enum import Enum as UserEnum
+from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+from flask_migrate import Migrate
 
 
 class Products(db.Model):
@@ -41,11 +44,25 @@ class User(db.Model, UserMixin):
         return self.name
 
 
+class Cart(db.Model):
+    __tablename__ = "cart"
+    __table_args__ = {'extend_existing': True}
+    id = Column(Integer, primary_key=True)
+    product_id = Column(Integer, ForeignKey('product.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    quantity = Column(Integer, nullable=False, default=0)
+    is_bill = Column(Boolean, default=False)
+    admin_confirm = Column(Boolean, default=False)
+    create_date = Column(DateTime, default=datetime.now())
+    product = relationship("Products", backref="carts")
+    user = relationship("User", backref="carts")
+
+
 if __name__ == "__main__":
     filenames = os.listdir("static/image")
     print(filenames)
     with app.app_context():
-        # db.create_all()
-        # utils.add_user(name="Nhân", email="nhan1901@gmail.com", password="123456", avatar_path="static/image/deafaut_avatar.jpg")
-        print("TEST oke")
+        new_cart = Cart(product_id=1, user_id=2)
+        db.session.add(new_cart)
+        db.session.commit()
 
