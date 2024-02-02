@@ -106,6 +106,8 @@ def user_page():
 
 @app.route("/cart")
 def cart():
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
     item_cart = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill == False)
 
     return render_template("cart.html", item_cart=item_cart)
