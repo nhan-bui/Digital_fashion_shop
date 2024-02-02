@@ -15,13 +15,21 @@
       <div class="col-md-3 col-xs-12" style="padding:5px">
 
           <div class="card" style="width:100px">
-            <img class="card-img-top" src="{{url_for('static', filename=p.image)}}" alt="{{p.name}}"  style="width: 200px; height: 200px; border-radius: 10px;">
+            <img class="card-img-top" src="{{url_for('static', filename=p.image)}}" alt="{{p.name}}"  style="width: 200px; height: 210px; border-radius: 10px;">
             <div class="card-body">
               <h4 class="card-title">{{p.name}}</h4>
               <p class="card-text">{{ (p.price) }} VND</p>
-              <a href="#" class="btn btn-primary">Đặt hàng</a>
+              <form action="{{url_for('home')}}" method="post">
+                <input type="hidden" id="product_id" name="product_id" value="{{ p.id }}">
+                <label for="quantity">Số lượng:</label>
+                <input type="number" name="quantity" id="quantity" value="1" class="form-control form-control-sm rounded">
+                <br>
+                <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+
+              </form>
             </div>
           </div>
+
 
       </div>
     {% endfor %}

@@ -12,6 +12,11 @@ def home():
     cate_id = request.args.get('category')
     keyword = request.args.get('keyword')
     products = utils.get_product(cate_id=cate_id, keyword=keyword)
+
+    if request.method.__eq__("POST"):
+        pr_id = request.form.get("product_id")
+        quantity = request.form.get("quantity")
+        print(pr_id, quantity)
     # if cate_id is not None:
     #     products = utils.get_product(cate_id=cate_id)
 
