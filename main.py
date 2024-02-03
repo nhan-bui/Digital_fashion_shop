@@ -100,15 +100,25 @@ def user_page():
             return render_template("user.html", err=err)
         except Exception:
             err = 1
+    bills = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(True))
 
-    return render_template("user.html", err=err)
+    return render_template("user.html", err=err, bills=bills)
 
 
-@app.route("/cart")
+@app.route("/cart", methods=["get", "post"])
 def cart():
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
-    item_cart = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill == False)
+    item_cart = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(False))
+
+    if request.method.__eq__("POST"):
+        product_id = request.form.get("product_id")
+        user_id = current_user.id
+        quantity = int(request.form.get("quantity"))
+        try:
+            utils.make_bill(product_id=product_id, user_id=user_id, quantity=quantity)
+        except Exception as e:
+            return "Đã có lỗi xảy ra"
 
     return render_template("cart.html", item_cart=item_cart)
 

@@ -41,7 +41,7 @@ def get_cart(product_id, user_id):
 
 def add_to_cart(product_id, user_id, quantity):
     cart = get_cart(product_id=product_id, user_id=user_id)
-    if cart:
+    if cart and cart.is_bill.__eq__(False):
         cart.quantity += quantity
     else:
         cart = Cart(product_id=product_id, user_id=user_id, quantity=quantity)
@@ -52,3 +52,10 @@ def add_to_cart(product_id, user_id, quantity):
         print(f"Error committing transaction: {str(e)}")
         db.session.rollback()
 
+
+def make_bill(product_id, user_id, quantity):
+    cart = Cart.query.filter(Cart.user_id.__eq__(user_id), Cart.product_id.__eq__(product_id),
+                             Cart.is_bill.__eq__(False)).first()
+    cart.quantity = quantity
+    cart.is_bill = True
+    db.session.commit()
