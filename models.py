@@ -62,8 +62,7 @@ class Cart(db.Model):
 if __name__ == "__main__":
     filenames = os.listdir("static/image")
     print(filenames)
-    with app.app_context():
-        new_cart = Cart(product_id=1, user_id=2)
-        db.session.add(new_cart)
-        db.session.commit()
+    # with app.app_context():
+    #     db.session.add(admin)
+    #     db.session.commit()
 

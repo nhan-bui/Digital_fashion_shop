@@ -1,0 +1,54 @@
+{% extends "layout/base.html" %}
+{% block title %}
+  Admin
+{% endblock %}
+
+{% block header %}
+  {% include "layout/header.html" %}
+{% endblock %}
+
+{% block content %}
+<br>
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+      <a class="nav-link" href="{{url_for('admin', page_id=1)}}"><strong>Đơn đã xác nhận</strong></a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{url_for('admin', page_id=2)}}"><strong>Đơn chưa xác nhận</strong></a>
+  </li>
+
+</ul>
+<br>
+{% for item in items %}
+
+<div class="card">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{url_for('static', filename=item.product.image)}}" alt="{{item.product.name}}" class="card-img" style="width: 200px; height: 210px; border-radius: 10px;">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+            <h3 class="card-title">{{item.product.name}}</h3>
+            <p>Giá sp: {{item.product.price}} VNĐ</p>
+            <p>Số lượng: {{item.quantity}}</p>
+            <p>Size: {{item.size}}</p>
+            <h4>Tổng tiền: {{item.product.price * item.quantity}} VNĐ</h4>
+            <br>
+            {% if not item.admin_confirm %}
+            <form action="{{url_for('admin')}}" method="post">
+                <input type="hidden" id="bill_id" name="bill_id" value="{{ item.id }}">
+
+                <button type="submit" class="btn btn-primary">Xác nhận</button>
+            </form>
+            {% else %}
+            <p style="color:green; float:right"><em>Đã xác nhận</em></p>
+            {% endif %}
+        </div>
+      </div>
+    </div>
+</div>
+<br>
+
+{% endfor %}
+
+{% endblock %}

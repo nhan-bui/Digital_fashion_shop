@@ -6,6 +6,11 @@ from flask_login import login_user, logout_user, current_user
 from init import login_manager
 
 
+@app.context_processor
+def inject_user_role():
+    return dict(UserRole=UserRole)
+
+
 @app.route("/", methods=['get', 'post'])
 def home():
     # products = Products.query
@@ -40,6 +45,8 @@ def login():
 
         if user:
             login_user(user=user)
+            if current_user.user_role == UserRole.ADMIN:
+                return redirect(url_for('admin'))
             return redirect(url_for('home'))
 
         err = 1
@@ -131,6 +138,28 @@ def cart():
             return "Đã có lỗi xảy ra"
 
     return render_template("cart.html", item_cart=item_cart)
+
+
+@app.route("/admin", methods=["get", "post"])
+def admin():
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
+
+    if current_user.user_role == UserRole.USER:
+        return redirect(url_for('user_page'))
+
+    num_page = request.args.get('page_id')
+    items = Cart.query.filter(Cart.is_bill.__eq__(True))
+    if num_page == "1":
+        items = items.filter(Cart.admin_confirm.__eq__(True))
+    elif num_page == "2":
+        items = items.filter(Cart.admin_confirm.__eq__(False))
+
+    if request.method == "POST":
+        bill_id = request.form.get("bill_id")
+        utils.admin_confirm(bill_id=bill_id)
+
+    return render_template("admin.html", items=items)
 
 
 if __name__ == "__main__":
