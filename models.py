@@ -51,6 +51,7 @@ class Cart(db.Model):
     product_id = Column(Integer, ForeignKey('product.id'), nullable=False)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     quantity = Column(Integer, nullable=False, default=0)
+    size = Column(String(10), default="NO")
     is_bill = Column(Boolean, default=False)
     admin_confirm = Column(Boolean, default=False)
     create_date = Column(DateTime, default=datetime.now())

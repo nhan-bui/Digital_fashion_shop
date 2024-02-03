@@ -35,16 +35,17 @@ def get_user_by_id(user_id):
     return User.query.get(user_id)
 
 
-def get_cart(product_id, user_id):
-    return Cart.query.filter(Cart.product_id.__eq__(product_id), Cart.user_id.__eq__(user_id)).first()
+def get_cart(product_id, user_id, size):
+    return Cart.query.filter(Cart.product_id.__eq__(product_id), Cart.user_id.__eq__(user_id),
+                             Cart.size.__eq__(size)).first()
 
 
-def add_to_cart(product_id, user_id, quantity):
-    cart = get_cart(product_id=product_id, user_id=user_id)
+def add_to_cart(product_id, user_id, size, quantity):
+    cart = get_cart(product_id=product_id, user_id=user_id, size=size)
     if cart and cart.is_bill.__eq__(False):
         cart.quantity += quantity
     else:
-        cart = Cart(product_id=product_id, user_id=user_id, quantity=quantity)
+        cart = Cart(product_id=product_id, user_id=user_id, quantity=quantity, size=size)
         db.session.add(cart)
     try:
         db.session.commit()
@@ -53,9 +54,10 @@ def add_to_cart(product_id, user_id, quantity):
         db.session.rollback()
 
 
-def make_bill(product_id, user_id, quantity):
+def make_bill(product_id, user_id, quantity, size):
     cart = Cart.query.filter(Cart.user_id.__eq__(user_id), Cart.product_id.__eq__(product_id),
-                             Cart.is_bill.__eq__(False)).first()
+                             Cart.is_bill.__eq__(False), Cart.size.__eq__(size)).first()
     cart.quantity = quantity
+    cart.size = size
     cart.is_bill = True
     db.session.commit()

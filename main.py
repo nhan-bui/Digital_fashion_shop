@@ -19,7 +19,10 @@ def home():
         pr_id = request.form.get("product_id")
         user_id = current_user.id
         quantity = int(request.form.get("quantity"))
-        utils.add_to_cart(product_id=pr_id, user_id=user_id, quantity=quantity)
+        size_clothes = request.form.get("size_clothes")
+        size_shoe = request.form.get("size_shoe")
+        size = size_shoe or size_clothes
+        utils.add_to_cart(product_id=pr_id, user_id=user_id, quantity=quantity, size=size)
 
     # if cate_id is not None:
     #     products = utils.get_product(cate_id=cate_id)
@@ -119,8 +122,11 @@ def cart():
         product_id = request.form.get("product_id")
         user_id = current_user.id
         quantity = int(request.form.get("quantity"))
+        size_shoe = request.form.get("size_shoe")
+        size_clothes = request.form.get("size_clothes")
+        size = size_shoe or size_clothes
         try:
-            utils.make_bill(product_id=product_id, user_id=user_id, quantity=quantity)
+            utils.make_bill(product_id=product_id, user_id=user_id, quantity=quantity, size=size)
         except Exception as e:
             return "Đã có lỗi xảy ra"
 
