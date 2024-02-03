@@ -84,6 +84,11 @@ def log_out():
 @app.route("/user", methods=['post', "get"])
 def user_page():
     err = None
+    if not current_user.is_authenticated:
+        return redirect(url_for("login"))
+
+    bills = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(True))
+
     if request.method.__eq__("POST"):
         name = request.form.get("name")
         avatar = request.files.get('avatar')
@@ -97,10 +102,9 @@ def user_page():
             current_user.avatar_path = avatar_path
             db.session.commit()
             err = 0
-            return render_template("user.html", err=err)
+            return render_template("user.html", err=err, bills=bills)
         except Exception:
             err = 1
-    bills = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(True))
 
     return render_template("user.html", err=err, bills=bills)
 
