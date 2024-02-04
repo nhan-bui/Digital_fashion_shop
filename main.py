@@ -142,6 +142,7 @@ def cart():
 
 @app.route("/admin", methods=["get", "post"])
 def admin():
+    err = None
     if not current_user.is_authenticated:
         return redirect(url_for("login"))
 
@@ -154,10 +155,30 @@ def admin():
         items = items.filter(Cart.admin_confirm.__eq__(True))
     elif num_page == "2":
         items = items.filter(Cart.admin_confirm.__eq__(False))
+    elif num_page == "3":
+        num_page = int(num_page)
+        return render_template("admin.html", num_page=num_page)
 
     if request.method == "POST":
-        bill_id = request.form.get("bill_id")
-        utils.admin_confirm(bill_id=bill_id)
+        if "sm1" in request.form:
+            bill_id = request.form.get("bill_id")
+            utils.admin_confirm(bill_id=bill_id)
+        elif "sm2" in request.form:
+            name_product = request.form.get("name")
+            avatar = request.files.get("avatar")
+            price = int(request.form.get("price"))
+            image_path = None
+            category = int(request.form.get("category"))
+            if avatar:
+                res = cloudinary.uploader.upload(avatar)
+                image_path = res['secure_url']
+            new_product = Products(name=name_product, image=image_path, price=price, category=category)
+            try:
+                utils.add_items(new_product)
+                err = 1
+            except Exception as e:
+                err = 0
+            return render_template("admin.html", err=err)
 
     return render_template("admin.html", items=items)
 
