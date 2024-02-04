@@ -7,10 +7,12 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a href="{{url_for('home')}}">Home</a></li>
+      {% if request.endpoint != 'login' and request.endpoint != 'register' %}
       <li><a href="{{ url_for('home', category=3) }}">Quần</a></li>
       <li><a href="{{ url_for('home', category=1) }}">Áo</a></li>
       <li><a href="{{ url_for('home', category=2) }}">Giày</a></li>
       <li><a href="#">Phụ kiện</a></li>
+      {% endif %}
       {% if current_user.user_role == UserRole.ADMIN %}
       <li><a href="{{ url_for('admin') }}">ADMIN</a></li>
       {% endif %}
@@ -18,13 +20,15 @@
 
     </ul>
 
-
+    {% if request.endpoint == 'home' %}
     <form class="navbar-form navbar-left">
       <div class="form-group">
         <input type="text" class="form-control" placeholder="Nhập từ khóa" name="keyword">
       </div>
       <button type="submit" class="btn btn-default">Search</button>
     </form>
+    {% endif %}
+
 
 
 

@@ -126,16 +126,22 @@ def cart():
     item_cart = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(False))
 
     if request.method.__eq__("POST"):
-        product_id = request.form.get("product_id")
-        user_id = current_user.id
-        quantity = int(request.form.get("quantity"))
-        size_shoe = request.form.get("size_shoe")
-        size_clothes = request.form.get("size_clothes")
-        size = size_shoe or size_clothes
-        try:
-            utils.make_bill(product_id=product_id, user_id=user_id, quantity=quantity, size=size)
-        except Exception as e:
-            return "Đã có lỗi xảy ra"
+        if 'bt1' in request.form:
+            product_id = request.form.get("product_id")
+            user_id = current_user.id
+            quantity = int(request.form.get("quantity"))
+            size_shoe = request.form.get("size_shoe")
+            size_clothes = request.form.get("size_clothes")
+            size = size_shoe or size_clothes
+            try:
+                utils.make_bill(product_id=product_id, user_id=user_id, quantity=quantity, size=size)
+            except Exception as e:
+                return "Đã có lỗi xảy ra"
+        elif "bt2" in request.form:
+            cart_id = request.form.get("cart_id")
+            delete_cart = Cart.query.get(cart_id)
+            db.session.delete(delete_cart)
+            db.session.commit()
 
     return render_template("cart.html", item_cart=item_cart)
 
