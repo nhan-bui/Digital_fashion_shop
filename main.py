@@ -62,6 +62,8 @@ def register():
         email = request.form.get('email')
         password = request.form.get("password").strip()
         cpass = request.form.get("confirmpassword").strip()
+        address = request.form.get("address").strip()
+        phonenum = request.form.get("phonenum")
         avatar_path = "static/image/deafaut_avatar.jpg"
         avatar = request.files.get('avatar')
         if avatar:
@@ -73,7 +75,8 @@ def register():
             return render_template("register.html", err=err)
 
         try:
-            utils.add_user(name=name, email=email, password=password, avatar_path=avatar_path)
+            utils.add_user(name=name, email=email, password=password, avatar_path=avatar_path,
+                           address=address, phonenum=phonenum)
             err = 0
         except Exception as e:
             err = 2
@@ -175,10 +178,12 @@ def admin():
             price = int(request.form.get("price"))
             image_path = None
             category = int(request.form.get("category"))
+            description = request.form.get("description")
             if avatar:
                 res = cloudinary.uploader.upload(avatar)
                 image_path = res['secure_url']
-            new_product = Products(name=name_product, image=image_path, price=price, category=category)
+            new_product = Products(name=name_product, image=image_path, price=price,
+                                   category=category, description=description)
             try:
                 utils.add_items(new_product)
                 err = 1

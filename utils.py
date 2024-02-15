@@ -8,9 +8,10 @@ def add_items(x: Products):
     db.session.commit()
 
 
-def add_user(name, email, password, avatar_path, user_role=UserRole.USER):
+def add_user(name, email, password, avatar_path, address, phonenum, user_role=UserRole.USER):
     password = str(hashlib.sha256(password.encode('utf-8')).hexdigest())
-    user = User(name=name, email=email, password=password, avatar_path=avatar_path, user_role=user_role)
+    user = User(name=name, email=email, password=password, avatar_path=avatar_path,
+                user_role=user_role, phone_num=phonenum, address=address)
     db.session.add(user)
     db.session.commit()
 
@@ -71,10 +72,13 @@ def admin_confirm(bill_id):
 
 if __name__ == "__main__":
     name = "Nhân admin"
-    email = "admin1@gmail.com"
+    email = "clone19@gmail.com"
     password = "123456"
     avatar_path = "static/image/deafaut_avatar.jpg"
-    user_role = UserRole.ADMIN
+    address = "Yen Nhan"
+    phonenum = "01234556"
+    #
+    # user_role = UserRole.ADMIN
     with app.app_context():
-        add_user(name=name, email=email, password=password, avatar_path=avatar_path, user_role=user_role)
+        add_user(name=name, email=email, password=password, avatar_path=avatar_path, phonenum=phonenum, address=address)
 

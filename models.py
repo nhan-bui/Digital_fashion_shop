@@ -6,7 +6,6 @@ from datetime import datetime
 from enum import Enum as UserEnum
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
-from flask_migrate import Migrate
 
 
 class Products(db.Model):
@@ -18,6 +17,7 @@ class Products(db.Model):
     category = Column(Integer, nullable=False)
     price = Column(Integer, nullable=False)
     image = Column(String(200))
+    description = Column(String(200), default="No description")
 
     def __str__(self):
         return f"{self.id} {self.name}"
@@ -29,7 +29,7 @@ class UserRole(UserEnum):
 
 
 class User(db.Model, UserMixin):
-    __table__name = "user"
+    __tablename = "user"
     __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True)
     name = Column(String(30), nullable=False)
@@ -39,6 +39,8 @@ class User(db.Model, UserMixin):
     active = Column(Boolean, default=True)
     joined_dated = Column(DateTime, default=datetime.now())
     user_role = Column(Enum(UserRole), default=UserRole.USER)
+    address = Column(String(100), nullable=False)
+    phone_num = Column(String(20), nullable=False)
 
     def __str__(self):
         return self.name
@@ -57,6 +59,18 @@ class Cart(db.Model):
     create_date = Column(DateTime, default=datetime.now())
     product = relationship("Products", backref="carts")
     user = relationship("User", backref="carts")
+
+
+class Comment(db.Model):
+    __tablename__ = "comment"
+    __table_args__ = {'extend_existing': True}
+    id = Column(Integer, primary_key=True)
+    product_id = Column(Integer, ForeignKey('product.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    product = relationship("Products", backref="related_comments")
+    user = relationship("User", backref="related_comments")
+    content = Column(String(1000), default="")
+    time_comment = Column(DateTime, default=datetime.now())
 
 
 if __name__ == "__main__":
