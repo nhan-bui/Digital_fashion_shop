@@ -39,7 +39,7 @@
 <div class="card">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img src="{{item.product.image}}" alt="{{item.product.name}}" class="card-img" style="width: 200px; height: 210px; border-radius: 10px;">
+        <img src="{{item.product.image}}" alt="{{item.product.name}}" class="card-img" style="width: 250px; height: 260px; border-radius: 10px;">
       </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -48,6 +48,8 @@
             <p>Số lượng: {{item.quantity}}</p>
             <p>Size: {{item.size}}</p>
             <h4>Tổng tiền: {{item.product.price * item.quantity}} VNĐ</h4>
+            <p> <em>Địa chỉ: </em> <a href="https://www.google.com/maps/place/{{item.user.address}}" target="_blank"><em>{{item.user.address}}</em></a></p>
+            <p> <em>SĐT: {{item.user.phone_num}}</em></p>
             <br>
             {% if not item.admin_confirm %}
             <form action="{{url_for('admin')}}" method="post">

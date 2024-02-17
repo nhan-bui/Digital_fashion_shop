@@ -194,5 +194,26 @@ def admin():
     return render_template("admin.html", items=items)
 
 
+@app.route("/product", methods=["POST", "GET"])
+def product():
+    err = None
+    products = Products.query
+
+    product_id = int(request.args.get("product_id"))
+    comments = Comment.query.filter(Comment.product_id)
+    item = products.get(product_id)
+    if request.method == "POST":
+        content = request.form.get('box')
+        try:
+            utils.add_comment(user_id=current_user.id, product_id=product_id, content=content)
+            err = 0
+
+        except Exception as e:
+            err = 1
+        return redirect(url_for('product', product_id=product_id))
+
+    return render_template("product.html", item=item, comments=comments, err=err)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

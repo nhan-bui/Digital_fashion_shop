@@ -1,0 +1,61 @@
+{% extends "layout/base.html" %}
+{% block title %}
+  Trang chủ
+{% endblock %}
+
+{% block header %}
+  {% include "layout/header.html" %}
+{% endblock %}
+
+{% block content %}
+<h2>Thông tin sản phẩm</h2>
+<br>
+<p></p>
+<div class="card">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{item.image}}" alt="{{item.name}}" class="card-img" style="width: 230px; height: 210px; border-radius: 10px;">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+            <h3 class="card-title">{{item.name}}</h3>
+            <br>
+
+            <p style="overflow-wrap:break-word;">{{ item.description }}</p>
+            <h4>Giá: {{item.price}}</h4>
+            <br>
+
+
+        </div>
+      </div>
+    </div>
+</div>
+<br>
+<br>
+<h3>Bình luận sản phẩm</h3>
+
+{% for comment in comments %}
+<div class="media border p-3">
+  <img src="{{comment.user.avatar_path}}" alt="Image" class="mr-3 mt-3 rounded-circle" style="width:30px;">
+  <div class="media-body">
+    <h4>{{comment.user.name}} <small><i>{{comment.time_comment}}</i></small></h4>
+    <p>{{comment.content}}</p>
+
+  </div>
+</div>
+{% endfor %}
+<br>
+
+
+<form action="{{url_for('product', product_id = item.id)}}" method="post">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Đánh giá về sản phẩm" id="box" name="box" style="width:600px" >
+    </div>
+
+    <button type="submit" class="btn btn-primary">Bình luận</button>
+</form>
+
+
+
+
+{% endblock %}

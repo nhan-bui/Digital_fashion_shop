@@ -17,7 +17,7 @@
           <div class="card" style="width:100px">
             <img class="card-img-top" src="{{p.image}}" alt="{{p.name}}"  style="width: 200px; height: 200px; border-radius: 10px;">
             <div class="card-body">
-              <h4 class="card-title">{{p.name}}</h4>
+              <a href="{{ url_for('product', product_id = p.id) }}"><h4 class="card-title" style="color:black">{{p.name}}</h4></a>
               <p class="card-text">{{ (p.price) }} VND</p>
               <form action="{{url_for('home')}}" method="post">
                 <input type="hidden" id="product_id" name="product_id" value="{{ p.id }}">

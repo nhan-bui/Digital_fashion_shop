@@ -1,5 +1,5 @@
 from init import db, app
-from models import Products, User, Cart, UserRole
+from models import Products, User, Cart, UserRole, Comment
 import hashlib
 
 
@@ -67,6 +67,12 @@ def make_bill(product_id, user_id, quantity, size):
 def admin_confirm(bill_id):
     bill = Cart.query.get(bill_id)
     bill.admin_confirm = True
+    db.session.commit()
+
+
+def add_comment(user_id, product_id, content):
+    comment = Comment(user_id=user_id, product_id=product_id, content=content)
+    db.session.add(comment)
     db.session.commit()
 
 
