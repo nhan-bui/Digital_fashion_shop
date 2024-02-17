@@ -12,14 +12,20 @@
 
 {% if err == 0 %}
 <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+
     <strong>Đăng kí thành công!</strong>
 </div>
 {% elif err == 1 %}
 <div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+
     <strong> Mật khẩu không khớp </strong>
 </div>
 {% elif err == 2 %}
 <div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+
     <strong> Đã có lỗi </strong>
 </div>
 {% endif %}

@@ -78,7 +78,7 @@ if __name__ == "__main__":
     address = "Yen Nhan"
     phonenum = "01234556"
     #
-    # user_role = UserRole.ADMIN
+    user_role = UserRole.ADMIN
     with app.app_context():
-        add_user(name=name, email=email, password=password, avatar_path=avatar_path, phonenum=phonenum, address=address)
+        add_user(name=name, email=email, password=password, avatar_path=avatar_path, phonenum=phonenum, address=address, user_role=user_role)
 

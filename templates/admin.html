@@ -25,7 +25,7 @@
 {% if err == 1 %}
 <div class="alert alert-success alert-dismissible">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Success!</strong> Indicates a successful or positive action.
+  <strong>Success!</strong> Đã thêm sản phẩm.
 </div>
 {% elif err == 0 %}
 <div class="alert alert-alert-danger alert-dismissible">
@@ -39,7 +39,7 @@
 <div class="card">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img src="{{url_for('static', filename=item.product.image)}}" alt="{{item.product.name}}" class="card-img" style="width: 200px; height: 210px; border-radius: 10px;">
+        <img src="{{item.product.image}}" alt="{{item.product.name}}" class="card-img" style="width: 200px; height: 210px; border-radius: 10px;">
       </div>
       <div class="col-md-8">
         <div class="card-body">

@@ -4,7 +4,7 @@ import cloudinary
 from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:nhandeptrai190103@127.0.0.1:3306/websale"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:nhandeptrai190103@127.0.0.1:3306/digital_shop"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app.secret_key = "$%###eqrwqr234312434214"
 

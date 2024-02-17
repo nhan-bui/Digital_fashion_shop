@@ -29,7 +29,7 @@ class UserRole(UserEnum):
 
 
 class User(db.Model, UserMixin):
-    __tablename = "user"
+    __tablename__ = "user"
     __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True)
     name = Column(String(30), nullable=False)
@@ -74,9 +74,8 @@ class Comment(db.Model):
 
 
 if __name__ == "__main__":
-    filenames = os.listdir("static/image")
-    print(filenames)
-    # with app.app_context():
-    #     db.session.add(admin)
-    #     db.session.commit()
+    # filenames = os.listdir("static/image")
+    # print(filenames)
+    with app.app_context():
+        db.create_all()
 
