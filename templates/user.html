@@ -38,10 +38,14 @@
         {% if err == 0 %}
         <div class="alert alert-success">
             <strong>Thay đổi thành công</strong>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+
         </div>
         {% elif err == 1 %}
         <div class="alert alert-danger">
             <strong>Đã có lỗi xảy ra</strong>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+
         </div>
         {% endif %}
 

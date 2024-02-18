@@ -1,6 +1,7 @@
 from init import db, app
 from models import Products, User, Cart, UserRole, Comment
 import hashlib
+from sqlalchemy import or_
 
 
 def add_items(x: Products):
@@ -21,7 +22,7 @@ def get_product(cate_id=None, keyword=None):
     if cate_id:
         products = products.filter(Products.category.__eq__(cate_id))
     if keyword:
-        products = products.filter(Products.name.contains(keyword))
+        products = products.filter(or_(Products.name.contains(keyword), Products.description.contains(keyword)))
     return products
 
 

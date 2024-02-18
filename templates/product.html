@@ -33,19 +33,20 @@
 <br>
 <br>
 <h3>Bình luận sản phẩm</h3>
+<div style="max-height:200px;overflow-y:auto;max-width:600px">
+    {% for comment in comments %}
+    <div class="media border p-3">
+      <img src="{{comment.user.avatar_path}}" alt="Image" class="mr-3 mt-3 rounded-circle" style="width:30px;">
+      <div class="media-body">
+        <h4>{{comment.user.name}} <small><i>{{comment.time_comment}}</i></small></h4>
+        <p>{{comment.content}}</p>
 
-{% for comment in comments %}
-<div class="media border p-3">
-  <img src="{{comment.user.avatar_path}}" alt="Image" class="mr-3 mt-3 rounded-circle" style="width:30px;">
-  <div class="media-body">
-    <h4>{{comment.user.name}} <small><i>{{comment.time_comment}}</i></small></h4>
-    <p>{{comment.content}}</p>
-
-  </div>
+      </div>
+    </div>
+    {% endfor %}
 </div>
-{% endfor %}
 <br>
-
+<br>
 
 <form action="{{url_for('product', product_id = item.id)}}" method="post">
     <div class="form-group">

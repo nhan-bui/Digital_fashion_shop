@@ -13,6 +13,7 @@ login
 {% if err %}
 <div class="alert alert-danger">
     <strong> Tài khoản hoặc mật khẩu không khớp </strong>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 {% endif %}
 <form method="post" action="{{url_for('login')}}">
