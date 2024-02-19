@@ -2,6 +2,7 @@ from init import db, app
 from models import Products, User, Cart, UserRole, Comment
 import hashlib
 from sqlalchemy import or_
+from datetime import datetime
 
 
 def add_items(x: Products):
@@ -60,6 +61,7 @@ def make_bill(product_id, user_id, quantity, size):
     cart = Cart.query.filter(Cart.user_id.__eq__(user_id), Cart.product_id.__eq__(product_id),
                              Cart.is_bill.__eq__(False), Cart.size.__eq__(size)).first()
     cart.quantity = quantity
+    cart.create_date = datetime.now()
     cart.size = size
     cart.is_bill = True
     db.session.commit()
