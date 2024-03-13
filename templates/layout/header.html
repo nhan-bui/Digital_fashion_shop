@@ -11,7 +11,7 @@
       <li><a href="{{ url_for('home', category=3) }}">Quần</a></li>
       <li><a href="{{ url_for('home', category=1) }}">Áo</a></li>
       <li><a href="{{ url_for('home', category=2) }}">Giày</a></li>
-      <li><a href="#">Phụ kiện</a></li>
+      <li><a href="{{ url_for('home', category=4) }}">Phụ kiện</a></li>
       {% endif %}
       {% if current_user.user_role == UserRole.ADMIN %}
       <li><a href="{{ url_for('admin') }}">ADMIN</a></li>
@@ -41,7 +41,9 @@
 
     <div class="btn-group" style="padding:8px;float:right">
         <a href="#" data-toggle="dropdown">
-           <img src="{{current_user.avatar_path}}" alt="Cinque Terre" width="32" height="24" style="border-radius: 30px;margin-top: 5px;margin-left: 80px;">
+          <div class="avatar">
+            <img src="{{current_user.avatar_path}}" alt="Cinque Terre" style="">
+          </div>
         </a>
         <div class="dropdown-menu">
           <div class="list-group">

@@ -89,5 +89,6 @@ if __name__ == "__main__":
     #
     user_role = UserRole.ADMIN
     with app.app_context():
-        add_user(name=name, email=email, password=password, avatar_path=avatar_path, phonenum=phonenum, address=address, user_role=user_role)
+        add_user(name=name, email=email, password=password, avatar_path=avatar_path,
+                 phonenum=phonenum, address=address, user_role=user_role)
 

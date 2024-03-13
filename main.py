@@ -103,19 +103,22 @@ def user_page():
     bills = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(True))
 
     if request.method.__eq__("POST"):
-        name = request.form.get("name")
-        avatar = request.files.get('avatar')
-        avatar_path = current_user.avatar_path
-        if avatar:
-            res = cloudinary.uploader.upload(avatar)
-            avatar_path = res['secure_url']
-
         try:
-            current_user.name = name
-            current_user.avatar_path = avatar_path
-            db.session.commit()
-            err = 0
-            return render_template("user.html", err=err, bills=bills)
+            name = request.form.get("name")
+            avatar = request.files.get('avatar')
+            avatar_path = current_user.avatar_path
+            if avatar:
+                res = cloudinary.uploader.upload(avatar)
+                avatar_path = res['secure_url']
+
+            try:
+                current_user.name = name
+                current_user.avatar_path = avatar_path
+                db.session.commit()
+                err = 0
+                return redirect(url_for("user_page"))
+            except Exception:
+                err = 1
         except Exception:
             err = 1
 
@@ -203,6 +206,8 @@ def product():
     comments = Comment.query.filter(Comment.product_id)
     item = products.get(product_id)
     if request.method == "POST":
+        if not current_user.is_authenticated:
+            return redirect(url_for("login"))
         content = request.form.get('box')
         try:
             utils.add_comment(user_id=current_user.id, product_id=product_id, content=content)
