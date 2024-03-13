@@ -13,7 +13,7 @@ Cart
 <h2>Thông tin giỏ hàng</h2>
 <br>
 {% for item in item_cart %}
-<div class="card">
+<div class="card" style="border:1px solid #ccc;padding:10px;margin-bottom:-10px;border-radius:10px">
   <div class="row no-gutters">
     <div class="col-md-4">
       <img src="{{item.product.image}}" alt="{{item.product.name}}" class="card-img" style="width: 230px; height: 210px; border-radius: 10px;">
@@ -37,7 +37,6 @@ Cart
                 <input type="text" name="size_shoe" id="size_shoe" value="{{item.size}}" class="form-control form-control-sm rounded" style="width:80px" placeholder="36 - 45">
 
             {% endif %}
-
             <br>
             <p>Giá sp: {{item.product.price}} VNĐ</p>
             <h4>Tổng tền: {{item.product.price * item.quantity}} VNĐ</h4>
