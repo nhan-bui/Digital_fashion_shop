@@ -81,7 +81,7 @@ def add_comment(user_id, product_id, content):
 
 if __name__ == "__main__":
     name = "Nhân admin"
-    email = "clone19@gmail.com"
+    email = "admin@gmail.com"
     password = "123456"
     avatar_path = "static/image/deafaut_avatar.jpg"
     address = "Yen Nhan"
