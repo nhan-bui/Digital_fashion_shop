@@ -13,7 +13,7 @@
   <div class="row">
     {% for p in products %}
     <a href="{{ url_for('product', product_id = p.id) }}">
-      <div class="col-md-3 col-xs-12" style="padding:5px">
+      <div class="col-md-2 col-md-4 col-sm-6 col-xs-12" style="padding:5px;margin-right:20px;">
 
           <div class="card" style="">
             <img class="image-container" src="{{p.image}}" alt="{{p.name}}">
