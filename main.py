@@ -64,7 +64,7 @@ def register():
         cpass = request.form.get("confirmpassword").strip()
         address = request.form.get("address").strip()
         phonenum = request.form.get("phonenum")
-        avatar_path = "static/image/deafaut_avatar.jpg"
+        avatar_path = "https://res.cloudinary.com/dscod7nw4/image/upload/v1708148084/qi3ttkumhoogbhew8ae6.jpg"
         avatar = request.files.get('avatar')
         if avatar:
             res = cloudinary.uploader.upload(avatar)
