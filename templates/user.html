@@ -10,8 +10,8 @@
 {% block content %}
 
 <div class="container" style="margin-top:30px">
-  <div class="row">
-    <div class="col-sm-4">
+  <div class="item-view" style="">
+    <div class="section1" style="margin:30px 30px 30px 30px">
         <h2>Thông tin cá nhân</h2>
         <div class="circle-image">
             <img src="{{current_user.avatar_path}}" width="200px" style="border-radius:90px;object-fit:cover;overflow:hidden"><br>
@@ -53,21 +53,27 @@
 
 
     </div>
-    <div class="col-sm-8">
+    <div class="card2" style="flex:1; padding:20px; overflow:hidden">
         <h3>Đơn đã mua</h3>
         {% for bill in bills %}
-        <div class="card">
-          <div class="row no-gutters">
-            <div class="col-md-4">
-              <img src="{{bill.product.image}}" alt="{{bill.product.name}}" class="card-img" style="width: 200px; height: 210px; border-radius: 10px;">
-            </div>
-            <div class="col-md-8">
-              <div class="card-body">
+        <div class="wrap-card" style="height:300px">
+
+              <img src="{{bill.product.image}}" alt="{{bill.product.name}}" class="card-img" style="margin-right: 20px;width: 200px; height: 210px; border-radius: 5px;">
+              <div class="card-body" style="margin-left:0px">
                   <h3 class="card-title">{{bill.product.name}}</h3>
-                  <p>Giá sp: {{bill.product.price}} VNĐ</p>
-                  <p>Số lượng: {{bill.quantity}}</p>
-                  <p>Size: {{bill.size}}</p>
-                  <h4>Tổng tiền: {{bill.product.price * bill.quantity}} VNĐ</h4>
+                  <p><strong>Số lượng: {{bill.quantity}}</strong></p>
+                  <p><strong>Size: {{bill.size}}</strong></p>
+                  <div class="wrap-form">
+                      <p class="card-text"><strong> Giá sp: </strong></p>
+                        <p style="font-size:25px; margin-left:3px">{{ '₫{:,.0f}'.format(bill.product.price) }}</p>
+                  </div>
+
+
+                  <div class="wrap-form">
+                        <p class="card-text"> <strong>Tổng tiền: </strong></p>
+                        <p style="font-size:25px; margin-left:3px">{{ '₫{:,.0f}'.format(bill.product.price * bill.quantity) }}</p>
+                  </div>
+
                   <br>
                   {% if bill.admin_confirm %}
                   <p style="color:green; float:right"><em>Người bán đã xác nhận đơn hàng</em></p>
@@ -75,8 +81,7 @@
                   <p style="color:gray; float:right"><em>Người bán chưa xác nhận đơn hàng</em></p>
                   {% endif %}
               </div>
-            </div>
-          </div>
+
         </div>
 <br>
 

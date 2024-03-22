@@ -13,14 +13,17 @@ Cart
 <h2>Thông tin giỏ hàng</h2>
 <br>
 {% for item in item_cart %}
-<div class="card" style="border:1px solid #ccc;padding:10px;margin-bottom:-10px;border-radius:10px">
-  <div class="row no-gutters">
+<div class="card" style="border:1px solid #ccc;padding:10px;margin-bottom:-10px;border-radius:10px;display:flex">
+  <div class="row no-gutters" style="width:100%">
     <div class="col-md-4">
       <img src="{{item.product.image}}" alt="{{item.product.name}}" class="card-img" style="width: 230px; height: 210px; border-radius: 10px;">
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
+    <div class="col-md-8" style="">
+      <div class="card-body" style="">
         <h3 class="card-title">{{item.product.name}}</h3>
+        <div class="wrap-form">
+
+
         <form action="{{url_for('cart')}}" method="post">
             <input type="hidden" id="cart_id" name="cart_id" value="{{ item.id }}">
             <input type="hidden" id="product_id" name="product_id" value="{{ item.product.id }}">
@@ -41,12 +44,13 @@ Cart
             <p>Giá sp: {{item.product.price}} VNĐ</p>
             <h4>Tổng tền: {{item.product.price * item.quantity}} VNĐ</h4>
 
-            <button type="submit" id="bt1" name="bt1" class="btn btn-primary" style="margin-right:5px;width:100px">Mua hàng</button>
+            <button type="submit" id="bt1" name="bt1" class="btn btn-primary" style="margin-right:5px;width:100px;margin-bottom:5px">Mua hàng</button>
 
-            <button type="submit" id="bt2" name="bt2" class="btn btn-primary">Xóa sản phẩm khỏi giỏ hàng</button>
+            <button type="submit" id="bt2" name="bt2" class="btn btn-primary" style="margin-bottom:5px">Xóa sản phẩm khỏi giỏ hàng</button>
 
 
         </form>
+        </div>
       </div>
     </div>
   </div>

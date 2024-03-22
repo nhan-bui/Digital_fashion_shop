@@ -10,68 +10,68 @@
 {% block content %}
 <div class="container">
   <h1>Sản phẩm</h1>
-  <div class="row">
-    {% for p in products %}
-    <a href="{{ url_for('product', product_id = p.id) }}">
-      <div class="col-md-2 col-md-4 col-sm-6 col-xs-12" style="padding:5px;margin-right:20px;">
-
-          <div class="card" style="">
-            <img class="image-container" src="{{p.image}}" alt="{{p.name}}">
-            <div class="card-body" style="margin-left:5px">
-              <a href="{{ url_for('product', product_id = p.id) }}"><h4 class="card-title" style="color:black">{{p.name}}</h4></a>
-              <div class="wrap-form">
-                <p class="card-text"> <strong>Giá: </strong></p>
-                <p style="font-size:25px; margin-left:3px">{{ '₫{:,.0f}'.format(p.price) }}</p>
-              </div>
-              <form action="{{url_for('home')}}" method="post">
-                <input type="hidden" id="product_id" name="product_id" value="{{ p.id }}">
-                <div class="wrap-form" style="">
-                  <p style="white-space:nowrap;margin-left:4px"><strong>Số lượng:</strong></p>
-                  <input type="number" name="quantity" id="quantity" value="1" class="form-control form-control-sm rounded" style="height:25px;width:60px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
-                </div>
-                <br>
-
+<!--  <div class="section" style="justify-content:center;display:flex;align-items:center">-->
+    <div class="item-view">
+      {% for p in products %}
+      <a href="{{ url_for('product', product_id = p.id) }}">
+<!--        <div class="col-12 col-sm-6 col-md-4 col-lg-2" style="padding:5px;margin-right:20px;">-->
+            <div class="card" style="margin-right:10px;margin-bottom:-8px">
+              <img class="image-container" src="{{p.image}}" alt="{{p.name}}">
+              <div class="card-body" style="margin-left:5px">
+                <a href="{{ url_for('product', product_id = p.id) }}"><h4 class="card-title" style="color:black">{{p.name}}</h4></a>
                 <div class="wrap-form">
-                {% if p.category == 1 or p.category == 3 %}
-                <label style="margin-right:5px" for="size_clothes">Size:</label>
-                <select class="form-control" id="size_clothes" name="size_clothes" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="2XL">2XL</option>
-                  <!-- Thêm các size khác nếu cần -->
-                </select>
-                {% elif p.category == 2 %}
-                <label for="size_shoe">Size:</label>
-                <select class="form-control" id="size_shoe" name="size_shoe" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
-                  <option value="36">36</option>
-                  <option value="37">37</option>
-                  <option value="38">38</option>
-                  <option value="39">39</option>
-                  <option value="40">40</option>
-                  <option value="41">41</option>
-                  <option value="42">42</option>
-                  <option value="43">43</option>
-                  <option value="44">44</option>
-                  <option value="45">45</option>
-                  <!-- Thêm các size khác nếu cần -->
-                </select>
-                {% endif %}
+                  <p class="card-text"> <strong>Giá: </strong></p>
+                  <p style="font-size:25px; margin-left:3px">{{ '₫{:,.0f}'.format(p.price) }}</p>
                 </div>
-                <p></p>
+                <form action="{{url_for('home')}}" method="post">
+                  <input type="hidden" id="product_id" name="product_id" value="{{ p.id }}">
+                  <div class="wrap-form" style="">
+                    <p style="white-space:nowrap;margin-left:4px"><strong>Số lượng:</strong></p>
+                    <input type="number" name="quantity" id="quantity" value="1" class="form-control form-control-sm rounded" style="height:25px;width:60px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
+                  </div>
+                  <br>
+
+                  <div class="wrap-form">
+                  {% if p.category == 1 or p.category == 3 %}
+                  <label style="margin-right:5px" for="size_clothes">Size:</label>
+                  <select class="form-control" id="size_clothes" name="size_clothes" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+                    <option value="2XL">2XL</option>
+                    <!-- Thêm các size khác nếu cần -->
+                  </select>
+                  {% elif p.category == 2 %}
+                  <label for="size_shoe">Size:</label>
+                  <select class="form-control" id="size_shoe" name="size_shoe" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                    <option value="40">40</option>
+                    <option value="41">41</option>
+                    <option value="42">42</option>
+                    <option value="43">43</option>
+                    <option value="44">44</option>
+                    <option value="45">45</option>
+                    <!-- Thêm các size khác nếu cần -->
+                  </select>
+                  {% endif %}
+                  </div>
+                  <p></p>
 
 
-                <button type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
+                  <button style="margin-bottom:5px" type="submit" class="btn btn-primary">Thêm vào giỏ hàng</button>
 
-              </form>
+                </form>
+              </div>
             </div>
-          </div>
 
-
-      </div>
-    </a>
-    {% endfor %}
-  </div>
+<!--        </div>-->
+      </a>
+      {% endfor %}
+    </div>
+<!--  </div>-->
 </div>
 {% endblock %}
