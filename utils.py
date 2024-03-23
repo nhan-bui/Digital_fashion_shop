@@ -45,11 +45,12 @@ def get_cart(product_id, user_id, size):
 
 def add_to_cart(product_id, user_id, size, quantity):
     cart = get_cart(product_id=product_id, user_id=user_id, size=size)
-    if cart and cart.is_bill.__eq__(False):
+    if cart and not cart.is_bill:
         cart.quantity += quantity
     else:
         cart = Cart(product_id=product_id, user_id=user_id, quantity=quantity, size=size)
         db.session.add(cart)
+
     try:
         db.session.commit()
     except Exception as e:

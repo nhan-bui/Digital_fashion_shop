@@ -36,13 +36,13 @@
 {% endif %}
 {% for item in items %}
 
-<div class="card">
+<div class="card" style="width:100%">
     <div class="row no-gutters">
       <div class="col-md-4">
         <img src="{{item.product.image}}" alt="{{item.product.name}}" class="card-img" style="width: 250px; height: 260px; border-radius: 10px;">
       </div>
       <div class="col-md-8">
-        <div class="card-body">
+        <div class="card-body" style="margin: 5px 5px 5px 5px;">
             <h3 class="card-title">{{item.product.name}}</h3>
             <p>Giá sp: {{item.product.price}} VNĐ</p>
             <p>Số lượng: {{item.quantity}}</p>
