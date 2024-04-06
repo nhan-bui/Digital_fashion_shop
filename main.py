@@ -203,7 +203,7 @@ def product():
     products = Products.query
 
     product_id = int(request.args.get("product_id"))
-    comments = Comment.query.filter(Comment.product_id)
+    comments = Comment.query.filter(Comment.product_id == product_id)
     item = products.get(product_id)
     if request.method == "POST":
         if not current_user.is_authenticated:
