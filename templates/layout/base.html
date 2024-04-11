@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <title>
@@ -17,10 +17,20 @@
     <link href="{{url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
-
+     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 
 
     <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+<!--            font-family: 'Poppins', sans-serif;-->
+            font-family: cursive;
+            transition: all 0.4s ease;;
+        }
+
+
         .image-container {
           position: relative;
           overflow: hidden;
@@ -48,11 +58,14 @@
         }
 
          .avatar {
-          width: 32px;
-          height:32px;
+          width: 35px;
+          height:35px;
           border-radius: 50%;
           overflow: hidden;
-          margin-left:98px;
+          padding:-10px;
+          display:flex;
+          justify-content:center;
+<!--          margin-left:98px;-->
         }
 
         .avatar img {
@@ -107,8 +120,8 @@
         }
         body {
             background-color:#e1e5ea;
-            font-family: Tahoma, sans-serif;
-            font-size:35;
+<!--            font-family: 'Poppins', sans-serif;-->
+<!--            font-family: cursive;-->
         }
         .item-view {
 
@@ -131,6 +144,7 @@
 
 
     </style>
+    {% block css_js %} {% endblock %}
 </head>
 <body>
     {% block header %} {% endblock %}

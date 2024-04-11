@@ -41,8 +41,8 @@ Cart
 
             {% endif %}
             <br>
-            <p>Giá sp: {{item.product.price}} VNĐ</p>
-            <h4>Tổng tền: {{item.product.price * item.quantity}} VNĐ</h4>
+            <p>Giá sp: {{ '₫{:,.0f}'.format(item.product.price) }} VNĐ</p>
+            <h4>Tổng tiền: {{ '₫{:,.0f}'.format(item.product.price * item.quantity) }}  VNĐ</h4>
 
             <button type="submit" id="bt1" name="bt1" class="btn btn-primary" style="margin-right:5px;width:100px;margin-bottom:5px">Mua hàng</button>
 
