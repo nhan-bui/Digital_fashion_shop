@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, jsonify
 from models import *
 import utils
 import cloudinary.uploader
@@ -33,6 +33,23 @@ def home():
     #     products = utils.get_product(cate_id=cate_id)
 
     return render_template("index.html", products=products)
+
+
+@app.route("/api/add_item", methods = ["post"])
+def add_item_api():
+    data = request.json
+
+    pr_id = data['pr_id']
+    user_id = data['user_id']
+    quantity = int(data['quantity'])
+    size = data['size']
+
+    try:
+        utils.add_to_cart(product_id=pr_id, user_id=user_id, size=size, quantity=quantity)
+        return jsonify({'status': "oke"})
+    except Exception as e:
+        print(e)
+        return jsonify({'status': "not oke"})
 
 
 @app.route("/login", methods=['get', 'post'])
