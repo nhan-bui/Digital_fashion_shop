@@ -21,10 +21,10 @@
           <li><a href="{{ url_for('home') }}">HOME</a></li>
 
 
-          <li><a href="#">Quần </a></li>
-          <li><a href="#">Áo</a></li>
-          <li><a href="#">Giày</a></li>
-          <li><a href="#">Phụ kiện</a></li>
+          <li><a href="{{ url_for('home', category=3) }}">Quần </a></li>
+          <li><a href="{{ url_for('home', category=1) }}">Áo</a></li>
+          <li><a href="{{ url_for('home', category=2) }}">Giày</a></li>
+          <li><a href="{{ url_for('home', category=4) }}">Phụ kiện</a></li>
           {% endif %}
 
           {% if current_user.user_role == UserRole.ADMIN %}

@@ -35,7 +35,7 @@ Cart
                 <input type="text" name="size_clothes" id="size_clothes" value="{{item.size}}" class="form-control form-control-sm rounded" style="width:80px" placeholder="S - 2XL">
 
 
-            {% elif item.product.category == 2 %}
+            {% else %}
                 <label for="size_shoe">Size:</label>
                 <input type="text" name="size_shoe" id="size_shoe" value="{{item.size}}" class="form-control form-control-sm rounded" style="width:80px" placeholder="36 - 45">
 
