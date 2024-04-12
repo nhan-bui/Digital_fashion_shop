@@ -10,7 +10,9 @@ function addToCart(category, user_id, pr_id){
         size = document.getElementById("size_shoe").value; // Lấy giá trị size từ select size giày
       }
 
-     var quantity = document.getElementById("quantity").value; // Lấy giá trị số lượng từ input số lượng
+     var quantityInput = document.getElementById("quantity_" + pr_id);
+     var quantity = quantityInput.value; // Lấy giá trị số lượng từ input số lượng
+
 
       fetch('/api/add_item', {
         method: 'post',
