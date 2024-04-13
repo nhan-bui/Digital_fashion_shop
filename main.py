@@ -78,7 +78,7 @@ def register():
         name = request.form.get("name")
         email = request.form.get('email')
         password = request.form.get("password").strip()
-        cpass = request.form.get("confirmpassword").strip()
+        cpass = request.form.get("confirm_password").strip()
         address = request.form.get("address").strip()
         phonenum = request.form.get("phonenum")
         avatar_path = "https://res.cloudinary.com/dscod7nw4/image/upload/v1708148084/qi3ttkumhoogbhew8ae6.jpg"
