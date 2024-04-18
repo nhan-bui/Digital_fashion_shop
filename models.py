@@ -77,5 +77,9 @@ if __name__ == "__main__":
     # filenames = os.listdir("static/image")
     # print(filenames)
     with app.app_context():
+        # db.session.query(Comment).delete()
+        # db.session.query(Cart).delete()
+        # db.session.query(Products).delete()
+        # db.session.commit()
         db.create_all()
 
