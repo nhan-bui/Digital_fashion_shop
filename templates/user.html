@@ -11,7 +11,7 @@
 
 <div class="container" style="margin-top:30px">
   <div class="item-view" style="">
-    <div class="section1" style="margin-right:20px; margin-top:10px; height:600px; background-color:white;padding:10px;">
+    <div class="section1" style="margin-right:20px; margin-top:10px; height:720px; background-color:white;padding:10px;">
         <h2>Thông tin cá nhân</h2>
         <div class="circle-image">
             <img src="{{current_user.avatar_path}}" width="200px" style="border-radius:90px;object-fit:cover;overflow:hidden"><br>
@@ -38,11 +38,19 @@
                 <input type="file" class="form-control" id="avatar" name="avatar" style="width:280px"/>
             </div>
             <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" placeholder="Enter name" id="name" name="name" value="{{current_user.name}}" style="width:280px">
+                <label for="name">Tên:</label>
+                <input type="text" class="form-control" placeholder="Nhập tên" id="name" name="name" value="{{current_user.name}}" style="width:280px">
             </div>
             <div class="form-group">
-                <label for="email">Email address:</label>
+                <label for="address">Địa chỉ:</label>
+                <input type="text" class="form-control" placeholder="Nhập địa chỉ" id="address" name="address" value="{{current_user.address}}" style="width:280px">
+            </div>
+            <div class="form-group">
+                <label for="phone_num">Số điện thoại:</label>
+                <input type="text" class="form-control" placeholder="Nhập SĐT" id="phone_num" name="phone_num" value="{{current_user.phone_num}}" style="width:280px">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
                 <input type="email" class="form-control" placeholder="Enter email" id="email" name="email" value="{{current_user.email}}" readonly style="width:280px">
             </div>
 
@@ -53,7 +61,7 @@
 
 
     </div>
-    <div class="card2" style="flex:1; padding:20px; overflow:auto; height:600px">
+    <div class="card2" style="flex:1; padding:20px; overflow:auto; height:720px">
         <h3 style="height:50px">Đơn đã mua</h3>
         {% for bill in bills %}
         <div class="wrap-card" style="height:300px">

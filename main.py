@@ -35,7 +35,7 @@ def home():
     return render_template("index.html", products=products)
 
 
-@app.route("/api/add_item", methods = ["post"])
+@app.route("/api/add_item", methods=["post"])
 def add_item_api():
     data = request.json
 
@@ -124,6 +124,8 @@ def user_page():
             name = request.form.get("name")
             avatar = request.files.get('avatar')
             avatar_path = current_user.avatar_path
+            address = request.form.get('address')
+            phone_num = request.form.get('phone_num')
             if avatar:
                 res = cloudinary.uploader.upload(avatar)
                 avatar_path = res['secure_url']
@@ -131,6 +133,8 @@ def user_page():
             try:
                 current_user.name = name
                 current_user.avatar_path = avatar_path
+                current_user.address = address
+                current_user.phone_num = phone_num
                 db.session.commit()
                 err = 0
                 return redirect(url_for("user_page"))
@@ -159,12 +163,15 @@ def cart():
             try:
                 utils.make_bill(product_id=product_id, user_id=user_id, quantity=quantity, size=size)
             except Exception as e:
-                return "Đã có lỗi xảy ra"
+                return redirect(url_for('cart'))
         elif "bt2" in request.form:
-            cart_id = request.form.get("cart_id")
-            delete_cart = Cart.query.get(cart_id)
-            db.session.delete(delete_cart)
-            db.session.commit()
+            try:
+                cart_id = request.form.get("cart_id")
+                delete_cart = Cart.query.get(cart_id)
+                db.session.delete(delete_cart)
+                db.session.commit()
+            except Exception as e:
+                return redirect(url_for('cart'))
 
     return render_template("cart.html", item_cart=item_cart)
 
@@ -187,6 +194,10 @@ def admin():
     elif num_page == "3":
         num_page = int(num_page)
         return render_template("admin.html", num_page=num_page)
+    elif num_page == "4":
+        num_page = int(num_page)
+        products = Products.query
+        return render_template("admin.html", num_page=num_page, products=products)
 
     if request.method == "POST":
         if "sm1" in request.form:
@@ -212,6 +223,19 @@ def admin():
             return render_template("admin.html", err=err)
 
     return render_template("admin.html", items=items)
+
+
+@app.route("/api/change_active", methods=["POST"])
+def change_active():
+    data = request.json
+    product_id = int(data['product_id'])
+    if current_user.user_role != UserRole.ADMIN:
+        return jsonify({"status": "no admin"})
+
+    result = utils.change_active(product_id=product_id)
+    if result != 3:
+        return jsonify({"status": "oke", "active": result})
+    return jsonify({"status": "not_oke", "active": result})
 
 
 @app.route("/product", methods=["POST", "GET"])

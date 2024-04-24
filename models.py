@@ -18,6 +18,7 @@ class Products(db.Model):
     price = Column(Integer, nullable=False)
     image = Column(String(200))
     description = Column(String(200), default="No description")
+    active = Column(Boolean, default=True)
 
     def __str__(self):
         return f"{self.id} {self.name}"
@@ -82,4 +83,5 @@ if __name__ == "__main__":
         # db.session.query(Products).delete()
         # db.session.commit()
         db.create_all()
+        db.session.commit()
 

@@ -19,7 +19,7 @@ def add_user(name, email, password, avatar_path, address, phonenum, user_role=Us
 
 
 def get_product(cate_id=None, keyword=None):
-    products = Products.query
+    products = Products.query.filter(Products.active == True)
     if cate_id:
         products = products.filter(Products.category.__eq__(cate_id))
     if keyword:
@@ -78,6 +78,18 @@ def add_comment(user_id, product_id, content):
     comment = Comment(user_id=user_id, product_id=product_id, content=content)
     db.session.add(comment)
     db.session.commit()
+
+
+def change_active(product_id):
+    product = Products.query.get(product_id)
+    new_active = not product.active
+    product.active = new_active
+    try:
+        db.session.commit()
+        return product.active
+    except Exception:
+        return 3
+
 
 
 if __name__ == "__main__":

@@ -181,7 +181,7 @@ $(".toggle").click(function () {
   </div>
   {% endif %}
   <div class="pen-title">
-    <h1>Login</h1><span>Pen <i class='fa fa-paint-brush'></i> Digital fashion shop <i class='fa fa-code'></i> </span>
+    <h1>Đăng nhập</h1><span><i class='fa fa-paint-brush'></i> Digital fashion shop <i class='fa fa-code'></i> </span>
   </div>
   <!-- Form Module-->
   <div class="module form-module">
@@ -189,18 +189,18 @@ $(".toggle").click(function () {
       <div class="tooltip">Click Me</div>
     </div>
     <div class="form">
-      <h2>Login to your account</h2>
+      <h2>Đăng nhập</h2>
       <form method="post" action="{{url_for('login')}}">
-        <input id="email" name="email" type="email" placeholder="Username"/>
-        <input id="password" name="password" type="password" placeholder="Password"/>
-        <button>Login</button>
+        <input id="email" name="email" type="email" placeholder="Email"/>
+        <input id="password" name="password" type="password" placeholder="Mật khẩu"/>
+        <button>Đăng nhập</button>
       </form>
     </div>
 
   </div>
 </div>
 
-<div class="carls" style="width:500px;height:100%; overflow:hidden">
+<div class="carls" style="width:550px;height:100%; overflow:hidden">
   <div class="slider">
     <div class="slide_viewer">
       <div class="slide_group">
@@ -214,7 +214,7 @@ $(".toggle").click(function () {
           <img height="500" width="100%" src="https://i.pinimg.com/564x/a2/e6/85/a2e6855e324ffa1e9792dbacd7adbebd.jpg">
         </div>
         <div class="slide">
-          <img height="120%" width="100%" src="https://i.pinimg.com/736x/e8/e7/e8/e8e7e8c23d3aa58572956545530bec27.jpg">
+          <img height="500" width="100%" src="https://i.pinimg.com/736x/e8/e7/e8/e8e7e8c23d3aa58572956545530bec27.jpg">
         </div>
       </div>
     </div>
@@ -377,12 +377,19 @@ a.slide_btn {
   }
 
   .login-view {
-      width:500px;
+      width:550px;
+      margin-right:0px
 
   }
 
   .carls {
       width:500px;
+      height:30px;
+  }
+  .carls img {
+      height:500px;
+  }
+  .slider {
       height:100%;
   }
 }

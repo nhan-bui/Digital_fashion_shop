@@ -19,6 +19,9 @@
   <li class="nav-item">
     <a class="nav-link" href="{{url_for('admin', page_id=3)}}"><strong>Thêm sản phẩm</strong></a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{{url_for('admin', page_id=4)}}"><strong>Tất cả sản phẩm</strong></a>
+  </li>
 
 </ul>
 <br>
@@ -30,12 +33,11 @@
 {% elif err == 0 %}
 <div class="alert alert-alert-danger alert-dismissible">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <strong>Success!</strong> Indicates a successful or positive action.
+  <strong>Thử lại</strong>
 </div>
 
 {% endif %}
 {% for item in items %}
-
 <div class="card" style="width:100%">
     <div class="row no-gutters">
       <div class="col-md-4">
@@ -101,6 +103,38 @@
     <button type="submit" class="btn btn-primary" id="sm2" name="sm2">Thêm</button>
 
 </form>
+
+{% elif num_page == 4 %}
+<table class="table table-dark" style="background-color: #ffffff">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Tên sp</th>
+      <th scope="col">Giá</th>
+      <th scope="col">Trạng thái</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <th scope="row">{{ product.id }}</th>
+      <td>{{ product.name}}</td>
+      <td>{{ product.price }}</td>
+      <td>
+          <form action="{{url_for('admin')}}" method="post">
+              {% if product.active %}
+              <button class="btn btn-primary" style="background-color:#c75050; width:80px" onclick="changeActive({{ product.id }})">Ẩn</button>
+              {% else %}
+              <button class="btn btn-primary" style="background-color:#3d85c6; width:80px" onclick="changeActive({{ product.id }})">Hiển thị</button>
+              {% endif %}
+          </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
 {% endif %}
 
 {% endblock %}
