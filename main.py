@@ -165,6 +165,7 @@ def cart():
             size = size_shoe or size_clothes
             try:
                 utils.make_bill(product_id=product_id, user_id=user_id, quantity=quantity, size=size)
+                return redirect(url_for('cart'))
             except Exception as e:
                 return redirect(url_for('cart'))
         elif "bt2" in request.form:
@@ -173,6 +174,7 @@ def cart():
                 delete_cart = Cart.query.get(cart_id)
                 db.session.delete(delete_cart)
                 db.session.commit()
+                return redirect(url_for('cart'))
             except Exception as e:
                 return redirect(url_for('cart'))
 

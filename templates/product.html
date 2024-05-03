@@ -79,9 +79,9 @@
 <br>
 <br>
 <h3>Bình luận sản phẩm</h3>
-<div style="max-height:200px;overflow-y:auto;max-width:600px">
+<div style="max-height:200px;overflow-y:auto;max-width:80%">
     {% for comment in comments %}
-    <div class="media border p-3">
+    <div class="media border p-3" style="width:95%">
         <div class="wrap_image" style="display:flex;">
             <div style="width:100%;height:100%;overflow:hidden;border-radius:50%;">
                 <img src="{{comment.user.avatar_path}}" alt="Image" style="width:100%;height:100%;object-fit:cover;">
