@@ -5,3 +5,5 @@ pymysql
 cloudinary
 sqlalchemy
 gunicorn
+python-dotenv
+replicate

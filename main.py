@@ -4,7 +4,10 @@ import utils
 import cloudinary.uploader
 from flask_login import login_user, logout_user, current_user
 from init import login_manager
+import replicate
+from dotenv import load_dotenv
 
+load_dotenv()
 
 @app.context_processor
 def inject_user_role():
@@ -259,6 +262,37 @@ def product():
         return redirect(url_for('product', product_id=product_id))
 
     return render_template("product.html", item=item, comments=comments, err=err)
+
+
+@app.route("/try_on", methods=["GET", "POST"])
+def try_on():
+    garms = Products.query.filter(Products.category.in_([1, 3]))
+    return render_template("try_on.html", garms=garms)
+
+
+@app.route("/api/load_image", methods=["POST", "GET"])
+def get_image():
+    data = request.json
+    model = data[0]['base64']
+    garm = data[1]['image_link']
+    human = f"data:application/octet-stream;base64,{model}"
+    inp = {
+        "garm_img": garm,
+        "human_img": human,
+        "garment_des": "cute pink top"
+    }
+    output = replicate.run(
+            "cuuupid/idm-vton:906425dbca90663ff5427624839572cc56ea7d380343d13e2a4c4b09d3f0c30f",
+            input=inp
+        )
+    # print(output)
+    # => "https://replicate.delivery/pbxt/Tfs5JETdzlURKyKeUOltKwch...
+    try:
+
+        return jsonify({"status": "oke",
+                        "image": output})
+    except Exception:
+        return jsonify({"status": "not oke"})
 
 
 if __name__ == "__main__":
