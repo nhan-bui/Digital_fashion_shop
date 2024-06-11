@@ -33,8 +33,8 @@
 
                   <div class="wrap-form">
                   {% if p.category == 1 or p.category == 3 %}
-                  <label style="margin-right:5px" for="size_clothes">Size:</label>
-                  <select class="form-control" id="size_clothes" name="size_clothes" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
+                  <label style="margin-right:5px" for="size_clothes_{{ p.id }}">Size:</label>
+                  <select class="form-control" id="size_clothes_{{ p.id }}" name="size_clothes" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
                     <option value="S">S</option>
                     <option value="M">M</option>
                     <option value="L">L</option>
@@ -43,8 +43,8 @@
                     <!-- Thêm các size khác nếu cần -->
                   </select>
                   {% else %}
-                  <label for="size_shoe">Size:</label>
-                  <select class="form-control" id="size_shoe" name="size_shoe" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
+                  <label for="size_shoe_{{ p.id }}">Size:</label>
+                  <select class="form-control" id="size_shoe_{{ p.id }}" name="size_shoe" style="height:25px;width:100px;margin-left:5px;margin-top:-5px;text-align:center;padding:2px">
                     <option value="36">36</option>
                     <option value="37">37</option>
                     <option value="38">38</option>
@@ -62,7 +62,7 @@
                   <p></p>
 
 
-                  <button style="margin-bottom:5px" type="submit" class="btn btn-primary" onclick="addToCart({{ p.category }}, {{ current_user.id }}, {{ p.id }})">Thêm vào giỏ hàng</button>
+                  <button style="margin-bottom:5px" type="submit" class="btn btn-primary" onclick="addToCart({{ p.category }}, {{ p.id }})">Thêm vào giỏ hàng</button>
 
                 </form>
               </div>

@@ -1,13 +1,13 @@
-function addToCart(category, user_id, pr_id){
+function addToCart(category, pr_id){
      event.preventDefault()
      var size = "";
      if (category ==  1 || category == 3) {
         // Sản phẩm là loại quần áo
-        size = document.getElementById("size_clothes").value; // Lấy giá trị size từ select size quần áo
+        size = document.getElementById("size_clothes_" + pr_id).value; // Lấy giá trị size từ select size quần áo
       }
       else {
         // Sản phẩm là loại giày
-        size = document.getElementById("size_shoe").value; // Lấy giá trị size từ select size giày
+        size = document.getElementById("size_shoe_" + pr_id).value; // Lấy giá trị size từ select size giày
       }
 
      var quantityInput = document.getElementById("quantity_" + pr_id);
@@ -18,7 +18,6 @@ function addToCart(category, user_id, pr_id){
         method: 'post',
         body: JSON.stringify({
           'pr_id': pr_id,
-          'user_id': user_id,
           'quantity': quantity,
           'size': size,
         }),

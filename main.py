@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, jsonify
+from flask import render_template, request, redirect, url_for, jsonify, session
 from models import *
 import utils
 import cloudinary.uploader
@@ -22,8 +22,6 @@ def home():
     products = utils.get_product(cate_id=cate_id, keyword=keyword)
 
     if request.method.__eq__("POST"):
-        if not current_user.is_authenticated:
-            return redirect(url_for("login"))
         pr_id = request.form.get("product_id")
         user_id = current_user.id
         quantity = int(request.form.get("quantity"))
@@ -43,16 +41,23 @@ def add_item_api():
     data = request.json
 
     pr_id = data['pr_id']
-    user_id = data['user_id']
     quantity = int(data['quantity'])
     size = data['size']
+    if current_user.is_authenticated:
+        try:
+            utils.add_to_cart(product_id=pr_id, user_id=current_user.id, size=size, quantity=quantity)
+            return jsonify({'status': "oke"})
+        except Exception as e:
+            print(e)
+            return jsonify({'status': "not oke"})
+    else:
+        carts = session.get('carts', [])
+        pr = Products.query.get(pr_id)
+        carts.append({'product_id': pr_id, 'quantity': quantity, 'name': pr.name,
+                      'size': size, 'price': pr.price, 'image': pr.image, 'category' : pr.category})
+        session['carts'] = carts
 
-    try:
-        utils.add_to_cart(product_id=pr_id, user_id=user_id, size=size, quantity=quantity)
-        return jsonify({'status': "oke"})
-    except Exception as e:
-        print(e)
-        return jsonify({'status': "not oke"})
+    return jsonify({'status': 'oke'})
 
 
 @app.route("/login", methods=['get', 'post'])
@@ -67,6 +72,10 @@ def login():
             login_user(user=user)
             if current_user.user_role == UserRole.ADMIN:
                 return redirect(url_for('admin'))
+            if 'carts' in session:
+                for ct in session['carts']:
+                    utils.add_to_cart(product_id=ct['product_id'], user_id=current_user.id, size=ct['size'], quantity=ct['quantity'])
+                session.pop('carts', None)
             return redirect(url_for('home'))
 
         err = 1
@@ -152,8 +161,17 @@ def user_page():
 @app.route("/cart", methods=["get", "post"])
 def cart():
     if not current_user.is_authenticated:
-        return redirect(url_for("login"))
-    item_cart = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(False))
+        item_cart = []
+        if 'carts' in session:
+            for ct in session['carts']:
+                item_cart.append(ct)
+
+        if request.method.__eq__("POST"):
+            if 'bt3' or 'bt4' in request.form:
+                return redirect(url_for('login'))
+        return render_template("cart.html", item_cart=item_cart)
+    else:
+        item_cart = Cart.query.filter(Cart.user_id.__eq__(current_user.id), Cart.is_bill.__eq__(False))
 
     if request.method.__eq__("POST"):
         if 'bt1' in request.form:

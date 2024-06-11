@@ -12,6 +12,7 @@ Cart
 <br>
 <h2>Thông tin giỏ hàng</h2>
 <br>
+{% if current_user.is_authenticated %}
 {% for item in item_cart %}
 <div class="card" style="border:1px solid #ccc;padding:10px;margin-bottom:-10px;border-radius:10px;display:flex">
   <div class="row no-gutters" style="width:100%">
@@ -60,4 +61,53 @@ Cart
 
 {% endfor %}
 
+{% else %}
+
+{% for item in item_cart %}
+<div class="card" style="border:1px solid #ccc;padding:10px;margin-bottom:-10px;border-radius:10px;display:flex">
+  <div class="row no-gutters" style="width:100%">
+    <div class="col-md-4">
+      <img src="{{item['image']}}" alt="{{item['name']}}" class="card-img" style="width: 230px; height: 210px; border-radius: 10px;">
+    </div>
+    <div class="col-md-8" style="">
+      <div class="card-body" style="">
+        <h3 class="card-title">{{item['name']}}</h3>
+        <div class="wrap-form">
+
+
+        <form action="{{url_for('cart')}}" method="post">
+            <label for="quantity">Số lượng:</label>
+            <input type="number" value="{{item['quantity']}}" class="form-control form-control-sm rounded" style="width:80px">
+            <p></p>
+            {% if item['category'] == 1 or item['category'] == 3 %}
+                <label for="size_clothes">Size:</label>
+                <input type="text" value="{{item['size']}}" class="form-control form-control-sm rounded" style="width:80px" placeholder="S - 2XL">
+
+
+            {% else %}
+                <label for="size_shoe">Size:</label>
+                <input type="text" value="{{item['size']}}" class="form-control form-control-sm rounded" style="width:80px" placeholder="36 - 45">
+
+            {% endif %}
+            <br>
+            <p>Giá sp: {{ '₫{:,.0f}'.format(item['price']) }} VNĐ</p>
+            <h4>Tổng tiền: {{ '₫{:,.0f}'.format(item['price'] * item['quantity']) }}  VNĐ</h4>
+
+            <button type="submit" id="bt3" class="btn btn-primary" style="margin-right:5px;width:100px;margin-bottom:5px">Mua hàng</button>
+
+            <button type="submit" id="bt4" class="btn btn-primary" style="margin-bottom:5px">Xóa sản phẩm khỏi giỏ hàng</button>
+
+
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
+
+{% endfor %}
+
+{% endif %}
 {% endblock %}
